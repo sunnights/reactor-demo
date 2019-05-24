@@ -40,7 +40,7 @@ public class ApiController {
         restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(
                 HttpClientBuilder.create().setConnectionManager(connectionManager).build()
         ));
-        fixedPool = Schedulers.newParallel("poolWithMaxSize",400);
+        fixedPool = Schedulers.newParallel("poolWithMaxSize", 400);
     }
 
     @RequestMapping("/hello")
@@ -66,25 +66,28 @@ public class ApiController {
 
     @RequestMapping("/hello02")
     public Mono<String> hello02(@RequestParam("latency") long latency) {
-        return Mono.fromCallable(()->restTemplate.getForObject(URL + latency, String.class))
+        return Mono.fromCallable(() -> restTemplate.getForObject(URL + latency, String.class))
                 .subscribeOn(Schedulers.elastic());
     }
+
     @RequestMapping("/hello03")
     public Mono<String> hello03(@RequestParam("latency") long latency) {
-        return Mono.fromCallable(()->restTemplate.getForObject(URL + latency, String.class))
+        return Mono.fromCallable(() -> restTemplate.getForObject(URL + latency, String.class))
                 .subscribeOn(fixedPool);
     }
+
     @RequestMapping("/hello04")
     public Mono<String> hello04(@RequestParam("latency") long latency) {
         return webClient.get()
-                .uri(URI+latency)
+                .uri(URI + latency)
                 .retrieve()
                 .bodyToMono(String.class);
     }
+
     @RequestMapping("/hello05")
     public String hello05(@RequestParam("latency") long latency) {
         return webClient.get()
-                .uri(URI+latency)
+                .uri(URI + latency)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
