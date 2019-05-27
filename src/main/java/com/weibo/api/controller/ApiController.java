@@ -92,4 +92,10 @@ public class ApiController {
                 .bodyToMono(String.class)
                 .block();
     }
+
+    @RequestMapping("/hello06")
+    public String hello06(@RequestParam("latency") long latency) {
+        return Mono.fromCallable(() -> restTemplate.getForObject(URL + latency, String.class))
+                .subscribeOn(Schedulers.elastic()).block();
+    }
 }

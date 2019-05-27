@@ -1,7 +1,6 @@
 package com.weibo.api.reactor;
 
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.util.function.Consumer;
@@ -11,8 +10,6 @@ public abstract class Flux<T> implements Publisher<T> {
     public static <T> Flux<T> just(T... data) {
         return new FluxArray<>(data);
     }
-
-    public abstract void subscribe(Subscriber<? super T> subscriber);
 
     public void subscribe(Consumer<? super T> consumer, Consumer<? super Throwable> errorConsumer, Runnable completeConsumer, Consumer<? super Subscription> subscriptionConsumer) {
         subscribe(new LambdaSubscriber<>(consumer, errorConsumer, completeConsumer, subscriptionConsumer));

@@ -9,6 +9,8 @@ public class FluxTest {
 
     @Test
     public void fluxArrayTest() {
+        reactor.core.publisher.Flux.just(1, 2)
+                .subscribe(System.out::println);
         Flux.just(1, 2, 3, 4, 5)
                 .subscribe(new MySubscriber<>());
     }
