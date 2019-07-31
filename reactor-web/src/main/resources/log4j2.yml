@@ -195,7 +195,7 @@ Configuration:
 
   Loggers:
     logger:
-      - name: com.weibo.api.socrates
+      - name: com.weibo.api
         level: debug
         additivity: false
         AppenderRef:
@@ -289,14 +289,6 @@ Configuration:
         additivity: false
         AppenderRef:
           - ref: http_client_access_file
-            level: info
-
-      # for test
-      - name: zipkin2.reporter.LoggingReporter
-        level: info
-        additivity: false
-        AppenderRef:
-          - ref: eva_trace
             level: info
 
     Root:

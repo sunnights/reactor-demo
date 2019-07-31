@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:motan="http://api.weibo.com/schema/motan"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+
+    <!-- 本地直连配置 -->
+    <motan:registry id="directRegistry" regProtocol="direct" address="10.77.9.41:8000"/>
+
+    <!-- motan协议 -->
+    <motan:protocol id="motanProto" name="motan" serialization="hessian2"
+                    haStrategy="failfast" loadbalance="roundrobin"/>
+
+    <!-- 基础配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池 -->
+    <motan:basicReferer id="clientBasicConfig" registry="directRegistry" protocol="motanProto"
+                        group="motan-demo-rpc" application="motan-rpc-client" module="motan-demo-rpc"
+                        accessLog="true" requestTimeout="100"/>
+
+    <!-- 具体rpc服务配置，声明实现的接口类。需要根据业务情况设置合适的超时时间 -->
+    <motan:referer id="motanDemoReferer" interface="com.weibo.api.service.MotanDemoService"
+                   basicReferer="clientBasicConfig" requestTimeout="100000"/>
+    <motan:referer id="motanDemoExtensionReferer" interface="com.weibo.api.service.MotanDemoServiceExtension"
+                   basicReferer="clientBasicConfig" requestTimeout="100000"/>
+
+</beans>

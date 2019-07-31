@@ -1,5 +1,7 @@
 package reactor
 
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
 import scala.concurrent.duration._
 
 class LoadSimulation extends Simulation {
@@ -15,10 +17,15 @@ class LoadSimulation extends Simulation {
   val httpConf = http.warmUp(baseUrl).baseUrl(baseUrl).shareConnections.maxConnectionsPerHost(5000)
 
   // 定义模拟的场景
-  val scn1 = scenario(qps.toString).exec(http(qps + "_" + uri).get(uriPath).header("X-Proto", "SSL"))
+  val scn0 = scenario("warmup").exec(http(qps + "_" + "/warmup").get("/netty4"+path))
+  val scn1 = scenario("netty4").exec(http(qps + "_" + "/netty4").get("/netty4"+path))
+  val scn2 = scenario("reactor").exec(http(qps + "_" + "/reactor").get("/reactor"+path))
 
-  setUp(scn1.inject(constantUsersPerSec(qps) during (duration seconds)).protocols(httpConf))
-  //  setUp(scn1.inject(atOnceUsers(simUsers)).protocols(httpConf))
-  // 配置并发用户的数量在30秒内均匀提高至sim_users指定的数量
-  //  setUp(scn1.inject(rampUsers(qps).during(10 seconds)).protocols(httpConf))
+  setUp(
+    scn0.inject(constantUsersPerSec(qps) during (5 seconds)),
+    scn1.inject(nothingFor(10 seconds), constantUsersPerSec(qps) during (duration seconds)),
+    scn2.inject(nothingFor(25 seconds), constantUsersPerSec(qps) during (duration seconds))
+  ).protocols(httpConf)
 }
+
+// mvn gatling:test -Dgatling.simulationClass=reactor.LoadSimulation -Dbase.url=http://10.77.9.41:9001 -Duri=/netty4 -Dpath="?latency=100" -Dqps=100 -Dduration=10
