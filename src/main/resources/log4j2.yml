@@ -1,0 +1,306 @@
+Configuration:
+  #  monitorInterval: 60
+  status: warn
+  name: LogConfig
+  properties:
+    property:
+      - name: logPath
+        value: ./logs
+  appenders:
+    Console:
+      name: console
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%d{HH:mm:ss.SSS} %X{id} %-5level %logger{36} - %msg%n"
+    RollingFile:
+      - name: trace_file
+        fileName: ${logPath}/trace.log
+        filePattern: "${logPath}/trace.log.%d{yyyyMMdd-HH}"
+        filters:
+          ThresholdFilter:
+            # 只匹配trace级别日志
+            - level: trace
+            - level: debug
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        PatternLayout:
+          Pattern: "%d %p %t %C{1} %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            # 每小时切分一次日志
+            interval: 1
+            modulate: true
+      - name: debug_file
+        fileName: ${logPath}/debug.log
+        filePattern: "${logPath}/debug.log.%d{yyyyMMdd-HH}"
+        filters:
+          ThresholdFilter:
+            # 只匹配debug级别日志
+            - level: debug
+            - level: info
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        PatternLayout:
+          Pattern: "%d %p %t %C{1} %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: info_file
+        fileName: ${logPath}/info.log
+        filePattern: "${logPath}/info.log.%d{yyyyMMdd-HH}"
+        filters:
+          ThresholdFilter:
+            # 只匹配info级别日志
+            - level: info
+            - level: warn
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        PatternLayout:
+          Pattern: "%d %p %t %C{1} %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: warn_file
+        fileName: ${logPath}/warn.log
+        filePattern: "${logPath}/warn.log.%d{yyyyMMdd-HH}"
+        filters:
+          ThresholdFilter:
+            # 只匹配warn级别日志
+            - level: warn
+            - level: error
+              onMatch: DENY
+              onMismatch: NEUTRAL
+        PatternLayout:
+          Pattern: "%d %p %t %C{1} %X{id} %X{traceId} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: error_file
+        fileName: ${logPath}/error.log
+        filePattern: "${logPath}/error.log.%d{yyyyMMdd-HH}"
+        filters:
+          ThresholdFilter:
+            - level: error
+        PatternLayout:
+          Pattern: "%d %p %t %C{1} %X{id} %X{traceId} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: api_trace_file
+        fileName: ${logPath}/apitrace.log
+        filePattern: "${logPath}/apitrace.log.%d{yyyyMMdd-HH}"
+        PatternLayout:
+          Pattern: "%d %p %t %X{id} %X{traceId} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+
+      - name: trigger_file
+        fileName: ${logPath}/trigger.log
+        filePattern: "${logPath}/trigger.log.%d{yyyyMMdd-HH}"
+        PatternLayout:
+          Pattern: "%d %p %t %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: kafka_file
+        fileName: ${logPath}/kafka.log
+        filePattern: "${logPath}/kafka.log.%d{yyyyMMdd-HH}"
+        PatternLayout:
+          Pattern: "%d %p %t %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: push_file
+        fileName: ${logPath}/push.log
+        filePattern: "${logPath}/push.log.%d{yyyyMMdd-HH}"
+        PatternLayout:
+          Pattern: "%d %p %t %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: profile_file
+        fileName: ${logPath}/profile.log
+        filePattern: "${logPath}/profile.log.%d{yyyyMMdd-HH}"
+        filters:
+          ThresholdFilter:
+            - level: info
+        PatternLayout:
+          Pattern: "%d{yyyy-MM-dd HH:mm:ss} %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: other_file
+        fileName: ${logPath}/other.log
+        filePattern: "${logPath}/other.log.%d{yyyyMMdd}"
+        filters:
+          ThresholdFilter:
+            - level: warn
+        PatternLayout:
+          Pattern: "%d %p %t %C{1} %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: access_file
+        fileName: ${logPath}/access.log
+        filePattern: "${logPath}/access.log.%d{yyyyMMdd-HH}"
+        PatternLayout:
+          Pattern: "%d %p %X{id} %X{traceId} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: steplog_file
+        fileName: ${logPath}/steplog.log
+        filePattern: "${logPath}/steplog.log.%d{yyyyMMdd-HH}"
+        PatternLayout:
+          Pattern: "%d %p %X{id} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+      - name: http_client_access_file
+        fileName: ${logPath}/http_client_access.log
+        filePattern: "${logPath}/http_client_access.log.%d{yyyyMMdd-HH}"
+        PatternLayout:
+          Pattern: "%d %p %X{id} %X{traceId} - %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+
+      # for test
+      - name: eva_trace
+        fileName: ${logPath}/eva_trace.log
+        filePattern: "${logPath}/eva_trace.log.%d{yyyyMMdd-HH}"
+        filters:
+          ThresholdFilter:
+            - level: info
+        PatternLayout:
+          Pattern: "[%level] %d{yyyyMMdd HH:mm:ss.SSS} [%p][%t][%C{1}][%X{id}] %logger{1} - %msg%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+
+  Loggers:
+    logger:
+      - name: com.weibo.api.socrates
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: trace_file
+            level: trace
+          - ref: debug_file
+            level: debug
+          - ref: info_file
+            level: info
+          - ref: warn_file
+            level: warn
+          - ref: error_file
+            level: error
+      - name: cn.vika.memcached
+        level: warn
+        additivity: false
+        AppenderRef:
+          - ref: other_file
+      - name: org.apache.kafka
+        level: trace
+        additivity: false
+        AppenderRef:
+          - ref: trace_file
+      - name: com.weibo.vintage
+        level: warn
+        additivity: false
+        AppenderRef:
+          - ref: other_file
+
+      - name: info
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: info_file
+            level: info
+      - name: warn
+        level: warn
+        additivity: false
+        AppenderRef:
+          - ref: info_file
+            level: info
+          - ref: warn_file
+            level: warn
+      - name: error
+        level: error
+        additivity: false
+        AppenderRef:
+          - ref: info_file
+            level: info
+          - ref: error_file
+            level: error
+      - name: api_trace
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: api_trace_file
+            level: info
+
+      - name: trigger
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: trigger_file
+            level: info
+      - name: kafka
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: kafka_file
+            level: info
+      - name: profile
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: profile_file
+            level: info
+      - name: accessLog
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: access_file
+            level: info
+      - name: steplog
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: steplog_file
+            level: info
+      - name: httpclientaccess
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: http_client_access_file
+            level: info
+
+      # for test
+      - name: zipkin2.reporter.LoggingReporter
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: eva_trace
+            level: info
+
+    Root:
+      level: warn
+      AppenderRef:
+        - ref: error_file
+          level: error

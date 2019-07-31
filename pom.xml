@@ -3,8 +3,16 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <modules>
+        <module>benchmark</module>
+    </modules>
 
-    <groupId>com.weibo.api</groupId>
+    <parent>
+        <groupId>com.weibo.api</groupId>
+        <artifactId>weibo-api</artifactId>
+        <version>1.22</version>
+    </parent>
     <artifactId>reactor-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -12,6 +20,14 @@
         <java.version>1.8</java.version>
         <scala.version>2.12.8</scala.version>
         <gatling.version>3.1.2</gatling.version>
+        <spring.version>5.1.4.RELEASE</spring.version>
+        <motan.intra.version>1.59-empty</motan.intra.version>
+        <motan.open.version>1.1.7-SNAPSHOT</motan.open.version>
+        <motan.weibo.version>0.0.13</motan.weibo.version>
+        <harmonia.version>1.0.174</harmonia.version>
+        <harmonia-trace-project.version>2.1.7</harmonia-trace-project.version>
+        <log4j.version>2.11.1</log4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>
@@ -19,9 +35,401 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.1.5.RELEASE</version>
+                <version>2.1.6.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>4.3.24.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+            </dependency>
+
+            <!--weibo dependencies-->
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>weibo-api-core</artifactId>
+                <version>6.0</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>motan-transport-netty</artifactId>
+                        <groupId>com.weibo</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>weibo-api-auth-core</artifactId>
+                <version>8.136</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>weibo-auth-spring-support</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>weibo-api-whitelist-core</artifactId>
+                <version>1.13</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>openapi-api-commons</artifactId>
+                <version>0.0.15</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>api-data</artifactId>
+                <version>4.760</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>api-commons</artifactId>
+                <version>4.262</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>api-common-rpc</artifactId>
+                <version>0.0.102</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>commons-memcache</artifactId>
+                <version>0.44</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>motan-transport-netty</artifactId>
+                        <groupId>com.weibo</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>vintage-common</artifactId>
+                <version>1.2.18</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>vintage-client</artifactId>
+                <version>1.2.18</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>2.1.5.weibo.27</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>commons-configservice</artifactId>
+                <version>1.7</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>switchers</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>config-loader</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>web-commons</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.dconfs</groupId>
+                <artifactId>dconfs-client</artifactId>
+                <version>1.0.0.18</version>
+            </dependency>
+
+            <!--motan intra dependencies-->
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-core</artifactId>
+                <version>${motan.intra.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-springsupport</artifactId>
+                <version>${motan.intra.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-protocol-mc</artifactId>
+                <version>${motan.intra.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-protocol-mcq</artifactId>
+                <version>${motan.intra.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-protocol-redis</artifactId>
+                <version>${motan.intra.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-registry-vintage</artifactId>
+                <version>${motan.intra.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-registry-command-vintage</artifactId>
+                <version>${motan.intra.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-weibo-core</artifactId>
+                <version>${motan.weibo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-weibo-registry-vintage</artifactId>
+                <version>${motan.weibo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-weibo-protocol-mc</artifactId>
+                <version>${motan.weibo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-weibo-protocol-mcq</artifactId>
+                <version>${motan.weibo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-weibo-protocol-redis</artifactId>
+                <version>${motan.weibo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api</groupId>
+                <artifactId>motan-weibo-auth</artifactId>
+                <version>${motan.weibo.version}</version>
+            </dependency>
+            <!--motan open dependencies-->
+            <dependency>
+                <groupId>com.weibo</groupId>
+                <artifactId>motan-core</artifactId>
+                <version>${motan.open.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo</groupId>
+                <artifactId>motan-springsupport</artifactId>
+                <version>${motan.open.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo</groupId>
+                <artifactId>motan-transport-netty</artifactId>
+                <version>${motan.open.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo</groupId>
+                <artifactId>motan-transport-netty4</artifactId>
+                <version>${motan.open.version}</version>
+            </dependency>
+
+            <!--trace-->
+            <!-- trace资源 -->
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>memcache-trace</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>jedis-trace</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>mysql-trace</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <!-- HTTP客户端 -->
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>apache-http-client-trace</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <!-- HTTP服务端 -->
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>servlet-trace</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <!-- 如果需要自动配置servlet-trace，则可以引入servlet-trace-autoconfiguration这个包 -->
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>servlet-trace-autoconfiguration</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <!-- MOTAN -->
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>motan-trace</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia-projects</groupId>
+                <artifactId>harmonia-trace-core</artifactId>
+                <version>${harmonia-trace-project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia-projects</groupId>
+                <artifactId>harmonia-trace-instrumentation-motan</artifactId>
+                <version>${harmonia-trace-project.version}</version>
+            </dependency>
+            <!-- web服务 -->
+            <dependency>
+                <groupId>com.weibo.api.harmonia-projects</groupId>
+                <artifactId>harmonia-servlet-trace</artifactId>
+                <version>${harmonia-trace-project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia-projects</groupId>
+                <artifactId>harmonia-servlet-trace-autoconfiguration</artifactId>
+                <version>${harmonia-trace-project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia-projects</groupId>
+                <artifactId>harmonia-trace-instrumentation-apachehttpclient</artifactId>
+                <version>${harmonia-trace-project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia-projects</groupId>
+                <artifactId>function-trace</artifactId>
+                <version>${harmonia-trace-project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weibo.api.harmonia</groupId>
+                <artifactId>trace-core</artifactId>
+                <version>${harmonia.version}</version>
+            </dependency>
+
+            <!--third party dependencies-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.58</version>
+            </dependency>
+            <dependency>
+                <groupId>com.caucho</groupId>
+                <artifactId>hessian</artifactId>
+                <version>4.0.62</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>20.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>3.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.9</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math3</artifactId>
+                <version>3.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>3.5.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.8</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.47</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.codahale.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>3.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!--for log4j2.yml-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <!--Log4j 1.x Compatibility-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-1.2-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.26</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.26</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -34,6 +442,10 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-netty</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -57,6 +469,15 @@
             <artifactId>httpclient</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.weibo.api</groupId>
+            <artifactId>weibo-api-auth-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.weibo</groupId>
+            <artifactId>motan-transport-reactor-netty4</artifactId>
+            <version>${motan.open.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -74,6 +495,24 @@
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/annotations</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
