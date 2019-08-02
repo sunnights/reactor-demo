@@ -13,7 +13,7 @@
 
     <!-- motan协议 -->
     <motan:protocol id="motanProto" name="motan" serialization="hessian2" maxServerConnection="10000"
-                    minWorkerThread="200" maxWorkerThread="800"/>
+                    minWorkerThread="1000" maxWorkerThread="3000"/>
 
     <!-- 基础配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池 -->
     <motan:basicService id="serviceBasicConfig" registry="localRegistry" export="motanProto:8000"
