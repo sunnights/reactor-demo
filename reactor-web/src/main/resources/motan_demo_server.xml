@@ -6,7 +6,7 @@
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
     <!-- 业务具体实现类 -->
-    <bean id="motanDemoServiceImpl" class="com.weibo.api.service.MotanDemoServiceImpl"/>
+    <bean id="motanDemoServiceImpl" class="com.weibo.api.vlog.service.MotanDemoServiceImpl"/>
 
     <!-- config server 通用配置，线上环境使用config.api.weibo.com:80 -->
     <motan:registry id="localRegistry" regProtocol="local"/>
@@ -21,5 +21,5 @@
                         accessLog="true" requestTimeout="200"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。需要根据业务情况设置合适的超时时间 -->
-    <motan:service interface="com.weibo.api.service.MotanDemoService" ref="motanDemoServiceImpl" basicService="serviceBasicConfig"/>
+    <motan:service interface="com.weibo.api.vlog.service.MotanDemoService" ref="motanDemoServiceImpl" basicService="serviceBasicConfig"/>
 </beans>

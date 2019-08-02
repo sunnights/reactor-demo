@@ -1,4 +1,4 @@
-package com.weibo.api.service;
+package com.weibo.api.vlog.service;
 
 import com.weibo.api.motan.transport.extension.MotanExtension;
 
