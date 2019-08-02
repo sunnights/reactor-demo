@@ -14,7 +14,7 @@ class LoadSimulation extends Simulation {
   val duration = System.getProperty("duration").toInt
   val uriPath = uri + path
 
-  val httpConf = http.warmUp(baseUrl).baseUrl(baseUrl).shareConnections.maxConnectionsPerHost(5000)
+  val httpConf = http.baseUrl(baseUrl).shareConnections.maxConnectionsPerHost(5000)
 
   // 定义模拟的场景
   val scn1 = scenario(qps.toString).exec(http(qps + "_" + uri).get(uriPath))
