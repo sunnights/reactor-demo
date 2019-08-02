@@ -195,7 +195,7 @@ Configuration:
 
   Loggers:
     logger:
-      - name: com.weibo.api
+      - name: com.weibo.api.reactor
         level: debug
         additivity: false
         AppenderRef:

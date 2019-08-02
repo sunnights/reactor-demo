@@ -18,9 +18,9 @@
                         accessLog="true" requestTimeout="100"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。需要根据业务情况设置合适的超时时间 -->
-    <motan:referer id="motanDemoReferer" interface="com.weibo.api.vlog.service.MotanDemoService"
+    <motan:referer id="motanDemoReferer" interface="com.weibo.api.reactor.service.MotanDemoService"
                    basicReferer="clientBasicConfig" requestTimeout="100000"/>
-    <motan:referer id="motanDemoExtensionReferer" interface="com.weibo.api.vlog.service.MotanDemoServiceExtension"
+    <motan:referer id="motanDemoExtensionReferer" interface="com.weibo.api.reactor.service.MotanDemoServiceExtension"
                    basicReferer="clientBasicConfig" requestTimeout="100000"/>
 
 </beans>

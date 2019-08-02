@@ -1,4 +1,4 @@
-package com.weibo.api.vlog.service;
+package com.weibo.api.reactor.service;
 
 import java.util.concurrent.TimeUnit;
 
@@ -6,12 +6,6 @@ import java.util.concurrent.TimeUnit;
  * @author sunnights
  */
 public class MotanDemoServiceImpl implements MotanDemoService {
-    @Override
-    public String hello(String name) {
-        System.out.println(name);
-        return "Hello " + name;
-    }
-
     @Override
     public boolean sleep(long millis) {
         try {

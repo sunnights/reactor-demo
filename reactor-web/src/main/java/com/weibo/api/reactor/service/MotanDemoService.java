@@ -1,4 +1,4 @@
-package com.weibo.api.vlog.service;
+package com.weibo.api.reactor.service;
 
 import com.weibo.api.motan.transport.extension.MotanExtension;
 
@@ -7,7 +7,5 @@ import com.weibo.api.motan.transport.extension.MotanExtension;
  */
 @MotanExtension
 public interface MotanDemoService {
-    String hello(String name);
-
     boolean sleep(long millis);
 }

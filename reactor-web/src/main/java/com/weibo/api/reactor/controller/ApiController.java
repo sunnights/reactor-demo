@@ -1,4 +1,4 @@
-package com.weibo.api.controller;
+package com.weibo.api.reactor.controller;
 
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;

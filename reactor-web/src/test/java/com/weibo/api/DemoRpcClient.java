@@ -1,7 +1,7 @@
 package com.weibo.api;
 
-import com.weibo.api.vlog.service.MotanDemoService;
-import com.weibo.api.vlog.service.MotanDemoServiceExtension;
+import com.weibo.api.reactor.service.MotanDemoService;
+import com.weibo.api.reactor.service.MotanDemoServiceExtension;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import reactor.core.publisher.Mono;

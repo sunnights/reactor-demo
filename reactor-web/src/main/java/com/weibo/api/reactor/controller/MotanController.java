@@ -1,9 +1,9 @@
-package com.weibo.api.controller;
+package com.weibo.api.reactor.controller;
 
 import com.weibo.api.motan.common.MotanConstants;
 import com.weibo.api.motan.util.MotanSwitcherUtil;
-import com.weibo.api.vlog.service.MotanDemoService;
-import com.weibo.api.vlog.service.MotanDemoServiceExtension;
+import com.weibo.api.reactor.service.MotanDemoService;
+import com.weibo.api.reactor.service.MotanDemoServiceExtension;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpStatus;

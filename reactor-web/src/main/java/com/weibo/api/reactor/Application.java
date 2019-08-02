@@ -1,4 +1,4 @@
-package com.weibo.api;
+package com.weibo.api.reactor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
