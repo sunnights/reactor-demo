@@ -57,7 +57,12 @@ public class MotanController {
 
     @RequestMapping("/reactor")
     public Mono<Boolean> hello3(@RequestParam("latency") long latency) {
-        return reactorService.sleepReactor(latency);
+        try {
+            return reactorService.sleepReactor(latency);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Mono.just(false);
     }
 
     @RequestMapping("/gc")

@@ -6,7 +6,7 @@
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
     <!-- 本地直连配置 -->
-    <motan:registry id="directRegistry" regProtocol="direct" address="127.0.0.1:8000"/>
+    <motan:registry id="directRegistry" regProtocol="direct" address="10.77.9.40:8000"/>
 
     <!-- motan协议 -->
     <motan:protocol id="motanProto" name="motan" serialization="hessian2"
