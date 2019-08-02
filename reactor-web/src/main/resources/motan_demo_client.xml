@@ -14,7 +14,7 @@
 
     <!-- 基础配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池 -->
     <motan:basicReferer id="clientBasicConfig" registry="directRegistry" protocol="motanProto"
-                        group="motan-demo-rpc" application="motan-rpc-client" module="motan-demo-rpc"
+                        group="motan-demo-rpc" application="motan-rpc-client" module="motan-demo-rpc" check="false"
                         accessLog="true" requestTimeout="100" throwException="true"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。需要根据业务情况设置合适的超时时间 -->
