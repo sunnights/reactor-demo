@@ -60,6 +60,14 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
         <!--Log4j 1.x Compatibility-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -96,6 +104,14 @@
         <dependency>
             <groupId>com.weibo</groupId>
             <artifactId>motan-transport-reactor-netty4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.weibo</groupId>
+            <artifactId>motan-registry-zookeeper</artifactId>
         </dependency>
     </dependencies>
 

@@ -33,6 +33,7 @@ public class MotanController {
         ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"classpath:motan_demo_client.xml"});
         service = (MotanDemoService) ctx.getBean("motanDemoReferer");
         reactorService = (MotanDemoServiceExtension) ctx.getBean("motanDemoExtensionReferer");
+        MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
     }
 
     @RequestMapping("/motan")

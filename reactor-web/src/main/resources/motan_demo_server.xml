@@ -10,15 +10,16 @@
 
     <!-- config server 通用配置，线上环境使用config.api.weibo.com:80 -->
     <motan:registry id="localRegistry" regProtocol="local"/>
+    <motan:registry id="zkRegistry" regProtocol="zookeeper" address="10.77.9.41:2181"/>
 
     <!-- motan协议 -->
     <motan:protocol id="motanProto" name="motan" serialization="hessian2" maxServerConnection="10000"
                     minWorkerThread="1000" maxWorkerThread="3000"/>
 
     <!-- 基础配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池 -->
-    <motan:basicService id="serviceBasicConfig" registry="localRegistry" export="motanProto:8001"
+    <motan:basicService id="serviceBasicConfig" registry="zkRegistry" export="motanProto:8000"
                         group="motan-demo-rpc" application="motan-rpc-service" module="motan-demo-rpc"
-                        accessLog="true" requestTimeout="200"/>
+                        accessLog="false" requestTimeout="10000"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。需要根据业务情况设置合适的超时时间 -->
     <motan:service interface="com.weibo.api.reactor.service.MotanDemoService" ref="motanDemoServiceImpl" basicService="serviceBasicConfig"/>
