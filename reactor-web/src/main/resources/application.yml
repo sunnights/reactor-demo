@@ -3,5 +3,3 @@ logging:
 
 server:
   port: 9011
-  tomcat:
-    max-threads: 200
