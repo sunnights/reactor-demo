@@ -6,7 +6,7 @@
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
     <!-- 本地直连配置 -->
-    <motan:registry id="directRegistry" regProtocol="direct" address="10.77.9.40:8000,10.77.9.41:8000,10.77.108.133:8000"/>
+    <motan:registry id="directRegistry" regProtocol="direct" address="10.77.108.133:8000"/>
     <motan:registry id="zkRegistry" regProtocol="zookeeper" address="10.77.9.41:2181"/>
 
     <!-- motan协议 -->
@@ -14,7 +14,7 @@
                     haStrategy="failfast" loadbalance="roundrobin"/>
 
     <!-- 基础配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池 -->
-    <motan:basicReferer id="clientBasicConfig" registry="zkRegistry" protocol="motanProto"
+    <motan:basicReferer id="clientBasicConfig" registry="directRegistry" protocol="motanProto"
                         group="motan-demo-rpc" application="motan-rpc-client" module="motan-demo-rpc" check="false"
                         accessLog="true" requestTimeout="10000" throwException="true"/>
 
